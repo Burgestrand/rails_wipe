@@ -1,5 +1,9 @@
 require "rails_prune/version"
 
 module RailsPrune
-  # Your code goes here...
+  class Railtie < Rails::Railtie
+    rake_tasks do
+      load "rails_prune/task.rake"
+    end
+  end
 end
