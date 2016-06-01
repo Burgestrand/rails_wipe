@@ -29,7 +29,7 @@ abort in production.
 Sometimes you want to prune in production, e.g. if you run staging on the production environment. While
 scary, it is possible to override the environment check by putting the following code in your Rakefile:
 
-```
+```ruby
 Rake::Task["prune:environment"].clear
 
 task "prune:environment" => [:environment] do
