@@ -24,6 +24,20 @@ rake prune:environment                  # An overridable environment for rails_p
 **Warning:** this will wipe your database, be careful! By default `prune:environment` will
 abort in production.
 
+### Overriding environment check
+
+Sometimes you want to prune in production, e.g. if you run staging on the production environment. While
+scary, it is possible to override the environment check by putting the following code in your Rakefile:
+
+```
+Rake::Task["prune:environment"].clear
+
+task "prune:environment" => [:environment] do
+  # Replace the below code with whatever madness you prefer.
+  abort "[ERROR] Cannot prune #{Rails.env} environment." if Rails.env.production?
+end
+```
+
 ## Contributing
 
 After checking out the repo, run `bin/setup` to install dependencies.
