@@ -11,7 +11,9 @@ namespace :db do
     Rails.application.eager_load!
 
     connection = ActiveRecord::Base.connection
-    quoted_table_names = (ActiveRecord::Base.descendants - [ActiveRecord::SchemaMigration]).map(&:quoted_table_name)
+    quoted_table_names = (ActiveRecord::Base.descendants - [ActiveRecord::SchemaMigration])
+      .select(&:table_exists?)
+      .map(&:quoted_table_name)
 
     connection.execute("TRUNCATE TABLE #{quoted_table_names.join(",")} CASCADE")
   end
