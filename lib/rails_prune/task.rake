@@ -15,6 +15,11 @@ namespace :db do
       .select(&:table_exists?)
       .map(&:quoted_table_name)
 
-    connection.execute("TRUNCATE TABLE #{quoted_table_names.join(",")} CASCADE")
+    sql = <<-SQL.strip_heredoc
+      TRUNCATE TABLE #{quoted_table_names.join(",")}
+    SQL
+
+    $stderr.puts sql
+    connection.execute(sql)
   end
 end
