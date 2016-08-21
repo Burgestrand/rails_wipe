@@ -1,13 +1,13 @@
-namespace :prune do
-  desc "An overridable environment for rails_prune gem"
-  task environment: [:environment] do
-    abort "[ERROR] Cannot prune #{Rails.env} environment." if Rails.env.production?
-  end
-end
-
 namespace :db do
-  desc "Truncate the database (from rails_prune gem)"
-  task prune: ["prune:environment"] do
+  namespace :wipe do
+    desc "An overridable environment for rails_wipe gem"
+    task environment: [:environment] do
+      abort "[ERROR] Cannot wipe #{Rails.env} environment." if Rails.env.production?
+    end
+  end
+
+  desc "Truncate the database (from rails_wipe gem)"
+  task wipe: ["wipe:environment"] do
     Rails.application.eager_load!
 
     connection = ActiveRecord::Base.connection
